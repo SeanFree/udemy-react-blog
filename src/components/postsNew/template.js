@@ -1,10 +1,13 @@
 import React from 'react';
 import { Field } from 'redux-form';
+import { Link } from 'react-router-dom';
 import PostFormField from '../postFormField';
 
 export default function() {
+    const { handleSubmit } = this.props;
+
     return (
-        <form>
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
             <Field
                 name="title"
                 label="Title"
@@ -19,10 +22,12 @@ export default function() {
             />
             <Field
                 name="content"
-                label="Post Context"
+                label="Post Content"
                 type="textarea"
                 component={PostFormField}
             />
+            <button type="submit" className="btn btn-primary">Submit</button>
+            <Link className="btn btn-danger" to="/">Cancel</Link>
         </form>
     );
 }

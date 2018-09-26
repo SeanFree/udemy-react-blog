@@ -1,14 +1,37 @@
 import React from 'react';
 
-export default function(field) {
-    return (
-        <div className="form-group">
-            <label>{field.label}</label>
-            <input
-                type={field.type}
+const RenderInput = ({ type, input }) => {
+    let InputEl;
+
+    if (type === "textarea") {
+        InputEl =
+            <textarea
                 className="form-control"
-                {...field.input}
-            />
+                {...input}
+            ></textarea>;
+    } else {
+        InputEl =
+            <input
+                type={type}
+                className="form-control"
+                {...input}
+            />;
+    }
+
+    return InputEl;
+};
+
+export default function(field) {
+    const  { label, meta: { touched, error } } = field;
+    const className = `form-group ${touched && error ? 'has-danger' : ''}`
+
+    return (
+        <div className={className}>
+            <label>{label}</label>
+            <RenderInput {...field}/>
+            <p className="text-help">
+                {touched && error}
+            </p>
         </div>
     );
 }
